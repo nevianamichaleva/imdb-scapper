@@ -11,6 +11,13 @@ module.exports = {
     insertManySimpleMovies(movies) {
         SimpleMovie.insertMany(movies);
     },
+    showSimpleMovies() {
+        return new Promise((resolve, reject) => {
+            SimpleMovie.find((err, simpleMovies) => {
+                resolve(simpleMovies);
+            });
+        });
+    },
     getActor(actor) {
         return new Actor({
             imageUrl: actor.image,
@@ -23,6 +30,13 @@ module.exports = {
         actor.save((err, currActor) => {
             console.log(err);
             console.log(currActor);
+        });
+    },
+    showActors() {
+        return new Promise((resolve, reject) => {
+            Actor.find((err, actors) => {
+                resolve(actors);
+            });
         });
     },
     getMovieInfo(movieinfo) {
@@ -40,6 +54,13 @@ module.exports = {
         movieinfo.save((err, currMovieinfo) => {
             console.log(err);
             console.log(currMovieinfo);
+        });
+    },
+    showMovies() {
+        return new Promise((resolve, reject) => {
+            MovieInfo.find((err, movies) => {
+                resolve(movies);
+            });
         });
     }
 };

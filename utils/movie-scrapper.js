@@ -20,5 +20,8 @@ module.exports = {
             .catch((err) => {
                 console.dir(err, { colors: true });
             });
+    },
+    showMovies() {
+        return modelsFactory.showMovies();
     }
 };
