@@ -37,7 +37,7 @@ module.exports.parseActorInformation = (html) => {
         image: $("#name-poster").attr("src"),
         name: $("#overview-top h1 span").html(),
         bio: $("#name-bio-text div div").html(),
-        movies: movies
+        movies
     };
 
     return Promise.resolve()
@@ -47,7 +47,7 @@ module.exports.parseActorInformation = (html) => {
 };
 
 module.exports.parseMovieInformation = (html) => {
-    $("body").html(body);
+    $("body").html(html);
     let actors = [];
     $(".cast_list .itemprop a").each((index, item) => {
         const actor = $(item).text();
@@ -66,7 +66,7 @@ module.exports.parseMovieInformation = (html) => {
         description: $("div[itemprop='description'] p").text(),
         categories: genres,
         dateRelease: $("meta[itemprop='datePublished']").attr("content"),
-        actors: actors
+        actors
     };
 
     return Promise.resolve()
