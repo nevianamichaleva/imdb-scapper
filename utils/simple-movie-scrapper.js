@@ -4,15 +4,14 @@
 const httpRequester = require("./http-requester");
 const htmlParser = require("./html-parser");
 const modelsFactory = require("../models");
-
+const constants = require("../config/constants");
 module.exports = {
     getMoviesFromUrl(url) {
         let promise = new Promise((resolve, reject) => {
             httpRequester.get(url)
                 .then((result) => {
-                    const selector = ".col-title span[title] a";
                     const html = result.body;
-                    return htmlParser.parseSimpleMovie(selector, html);
+                    return htmlParser.parseSimpleMovie(constants.selectorLinkOfMovieTitle, html);
                 })
                 .then(movies => {
                     let dbMovies = movies.map(movie => {

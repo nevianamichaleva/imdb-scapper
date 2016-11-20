@@ -4,7 +4,8 @@
 const jsdom = require("jsdom").jsdom,
     doc = jsdom(),
     window = doc.defaultView,
-    $ = require("jquery")(window);
+    $ = require("jquery")(window),
+    constants = require("../config/constants");
 
 module.exports.parseSimpleMovie = (selector, html) => {
     $("body").html(html);
@@ -14,7 +15,7 @@ module.exports.parseSimpleMovie = (selector, html) => {
 
         items.push({
             title: $item.html(),
-            url: $item.attr("href")
+            url: $item.attr(constants.attributeHrefName)
         });
     });
 
@@ -28,15 +29,15 @@ module.exports.parseActorInformation = (html) => {
     $("body").html(html);
 
     let movies = [];
-    $("#filmography .filmo-category-section .filmo-row b a").each((index, item) => {
+    $(constants.selectorLinkOfFilmCategories).each((index, item) => {
         const movie = $(item).html();
         movies.push(movie);
     });
 
     let actor = {
-        image: $("#name-poster").attr("src"),
-        name: $("#overview-top h1 span").html(),
-        bio: $("#name-bio-text div div").html(),
+        image: $(constants.selectorActorImage).attr(constants.attributeSrcName),
+        name: $(constants.selectorActorName).html(),
+        bio: $(constants.selectorActorBio).html(),
         movies
     };
 
@@ -49,23 +50,23 @@ module.exports.parseActorInformation = (html) => {
 module.exports.parseMovieInformation = (html) => {
     $("body").html(html);
     let actors = [];
-    $(".cast_list .itemprop a").each((index, item) => {
+    $(constants.selectorAllActors).each((index, item) => {
         const actor = $(item).text();
         actors.push(actor);
     });
     let genres = [];
-    $("span[itemprop='genre']").each((index, item) => {
+    $(constants.selectorCategories).each((index, item) => {
         const category = $(item).text();
         genres.push(category);
     });
 
     let movieInfo = {
-        image: $(".poster a img").attr("src"),
-        trailer: $(".slate a").attr("href"),
-        title: $(".title_wrapper h1").text(),
-        description: $("div[itemprop='description'] p").text(),
+        image: $(constants.selectorMovieImage).attr(constants.attributeSrcName),
+        trailer: $(constants.selectorMovieTrailer).attr(constants.attributeHrefName),
+        title: $(constants.selectorMovieTitle).text(),
+        description: $(constants.selectorMovieDescription).text(),
         categories: genres,
-        dateRelease: $("meta[itemprop='datePublished']").attr("content"),
+        dateRelease: $(constants.selectorMovieReleaseDate).attr(constants.attributeContentName),
         actors
     };
 
