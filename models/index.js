@@ -2,6 +2,7 @@
 
 const SimpleMovie = require("./simple-movie-model");
 const Actor = require("./actor-model");
+const MovieInfo = require("./movieinfo-model");
 
 module.exports = {
     getSimpleMovie(name, url) {
@@ -23,5 +24,22 @@ module.exports = {
             console.log(err);
             console.log(actor);
         });
+    },
+    getMovieInfo(movieinfo) {
+        return new MovieInfo({
+            imageUrl: movieinfo.image,
+            trailerUrl: movieinfo.trailerUrl,
+            title: movieinfo.title,
+            description: movieinfo.description,
+            categories: movieinfo.categories,
+            dateRelease: movieinfo.dateRelease,
+            actors: movieinfo.actors
+        });
+    },
+    saveMovieInfo(movieinfo) {
+        movieinfo.save((err, movieinfo) => {
+            console.log(err);
+            console.log(movieinfo);
+        });
     }
-};
+}

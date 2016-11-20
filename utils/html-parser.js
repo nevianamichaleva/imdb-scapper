@@ -45,3 +45,32 @@ module.exports.parseActorInformation = (html) => {
             return actor;
         });
 };
+
+module.exports.parseMovieInformation = (html) => {
+    $("body").html(body);
+    let actors = [];
+    $(".cast_list .itemprop a").each((index, item) => {
+        const actor = $(item).text();
+        actors.push(actor);
+    });
+    let genres = [];
+    $("span[itemprop='genre']").each((index, item) => {
+        const category = $(item).text();
+        genres.push(category);
+    });
+
+    let movieInfo = {
+        image: $(".poster a img").attr("src"),
+        trailer: $(".slate a").attr("href"),
+        title: $(".title_wrapper h1").text(),
+        description: $("div[itemprop='description'] p").text(),
+        categories: genres,
+        dateRelease: $("meta[itemprop='datePublished']").attr("content"),
+        actors: actors
+    };
+
+    return Promise.resolve()
+        .then(() => {
+            return movieInfo;
+        });
+};
