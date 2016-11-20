@@ -1,6 +1,7 @@
 /* globals console module */
 "use strict";
 
+const _ = require("lodash");
 const httpRequester = require("./http-requester");
 const htmlParser = require("./html-parser");
 const modelsFactory = require("../models");
@@ -12,7 +13,8 @@ let urlsQueue = queuesFactory.getQueue();
 
 constants.genres.forEach(genre => {
     for (let i = 0; i < constants.pagesCount; i += 1) {
-        let url = `http://www.imdb.com/search/title?genres=${genre}&title_type=feature&0sort=moviemeter,asc&page=${i+1}&view=simple&ref_=adv_nxt`;
+        let genUrl = _.template("http://www.imdb.com/search/title?genres=<%=genre%>&title_type=feature&0sort=moviemeter,asc&page=<%=i+1%>&view=simple&ref_=adv_nxt");
+        let url = genUrl({ genre, i });
         urlsQueue.push(url);
     }
 });
