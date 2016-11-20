@@ -20,9 +20,9 @@ module.exports = {
         });
     },
     saveActor(actor) {
-        actor.save((err, actor) => {
+        actor.save((err, currActor) => {
             console.log(err);
-            console.log(actor);
+            console.log(currActor);
         });
     },
     getMovieInfo(movieinfo) {
@@ -37,9 +37,9 @@ module.exports = {
         });
     },
     saveMovieInfo(movieinfo) {
-        movieinfo.save((err, movieinfo) => {
+        movieinfo.save((err, currMovieinfo) => {
             console.log(err);
-            console.log(movieinfo);
+            console.log(currMovieinfo);
         });
     }
-}
+};
