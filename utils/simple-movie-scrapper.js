@@ -1,27 +1,16 @@
 /* globals console module */
 "use strict";
 
-const _ = require("lodash");
 const httpRequester = require("./http-requester");
 const htmlParser = require("./html-parser");
 const modelsFactory = require("../models");
-const queuesFactory = require("../data-structures/queue");
 const timer = require("../utils/timer");
 const constants = require("../config/constants");
 
-let urlsQueue = queuesFactory.getQueue();
 
-constants.genres.forEach(genre => {
-    for (let i = 0; i < constants.pagesCount; i += 1) {
-        let genUrl = _.template("http://www.imdb.com/search/title?genres=<%=genre%>&title_type=feature&0sort=moviemeter,asc&page=<%=i+1%>&view=simple&ref_=adv_nxt");
-        let url = genUrl({ genre, i });
-        urlsQueue.push(url);
-    }
-});
 
 module.exports = {
-    getMoviesFromUrl() {
-        console.log(`Working with ${urlsQueue.pop()}`);
+    getMoviesFromUrls(urlsQueue) {
         httpRequester.get(urlsQueue.pop())
             .then((result) => {
                 const selector = ".col-title span[title] a";
@@ -40,7 +29,7 @@ module.exports = {
                     return;
                 }
 
-                this.getMoviesFromUrl(urlsQueue.pop());
+                this.getMoviesFromUrls(urlsQueue);
             })
             .catch((err) => {
                 console.dir(err, { colors: true });

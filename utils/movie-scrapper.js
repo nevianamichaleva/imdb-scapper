@@ -4,11 +4,12 @@
 const httpRequester = require("./http-requester");
 const htmlParser = require("./html-parser");
 const modelsFactory = require("../models");
+const timer = require("./timer");
 
 
 module.exports = {
-    getMovieInfoFromUrl(url) {
-        httpRequester.get(url)
+    getMoviesInfoFromUrls(urlsQueue) {
+        httpRequester.get(urlsQueue.pop())
             .then((result) => {
                 const html = result.body;
                 return htmlParser.parseMovieInformation(html);
@@ -16,6 +17,14 @@ module.exports = {
             .then(movieInfo => {
                 let dbMovieDetails = modelsFactory.getMovieInfo(movieInfo);
                 modelsFactory.saveMovieInfo(dbMovieDetails);
+                return timer.wait(1000);
+            })
+            .then(() => {
+                if (urlsQueue.isEmpty()) {
+                    return;
+                }
+
+                this.getMoviesInfoFromUrls(urlsQueue);
             })
             .catch((err) => {
                 console.dir(err, { colors: true });

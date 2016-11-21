@@ -28,8 +28,9 @@ module.exports = {
     },
     saveActor(actor) {
         actor.save((err, currActor) => {
-            console.log(err);
-            console.log(currActor);
+            if (err) {
+                console.dir(err, { colors: true });
+            }
         });
     },
     showActors() {
@@ -52,8 +53,9 @@ module.exports = {
     },
     saveMovieInfo(movieinfo) {
         movieinfo.save((err, currMovieinfo) => {
-            console.log(err);
-            console.log(currMovieinfo);
+            if (err) {
+                console.dir(err, { colors: true });
+            }
         });
     },
     showMovies() {

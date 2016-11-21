@@ -4,11 +4,12 @@
 const httpRequester = require("./http-requester");
 const htmlParser = require("./html-parser");
 const modelsFactory = require("../models");
+const timer = require("./timer");
 
 
 module.exports = {
-    getActorFromUrl(url) {
-        httpRequester.get(url)
+    getActorsFromUrls(urlsQueue) {
+        httpRequester.get(urlsQueue.pop())
             .then((result) => {
                 const html = result.body;
                 return htmlParser.parseActorInformation(html);
@@ -16,9 +17,20 @@ module.exports = {
             .then(actor => {
                 let dbActor = modelsFactory.getActor(actor);
                 modelsFactory.saveActor(dbActor);
+                return timer.wait(1000);
+            })
+            .then(() => {
+                if (urlsQueue.isEmpty()) {
+                    return;
+                }
+
+                this.getActorsFromUrls(urlsQueue);
             })
             .catch((err) => {
                 console.dir(err, { colors: true });
             });
+    },
+    showActors() {
+        return modelsFactory.showActors()
     }
 };

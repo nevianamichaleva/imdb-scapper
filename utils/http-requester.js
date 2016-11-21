@@ -5,6 +5,7 @@ const request = require("request");
 
 module.exports = {
     get(url) {
+        console.log(`Working with ${url}`);
         let promise = new Promise((resolve, reject) => {
             request(url, (err, response, body) => {
                 if (err) {
