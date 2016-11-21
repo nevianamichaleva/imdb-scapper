@@ -1,7 +1,6 @@
 /* globals console require setTimeout Promise */
 "use strict";
 
-
 const _ = require("lodash");
 
 const simpleMovieScrapper = require("./utils/simple-movie-scrapper");

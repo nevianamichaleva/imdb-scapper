@@ -5,7 +5,7 @@ const httpRequester = require("./http-requester");
 const htmlParser = require("./html-parser");
 const modelsFactory = require("../models");
 const timer = require("./timer");
-
+const constants = require("../config/constants");
 
 module.exports = {
     getActorsFromUrls(urlsQueue) {
@@ -17,7 +17,7 @@ module.exports = {
             .then(actor => {
                 let dbActor = modelsFactory.getActor(actor);
                 modelsFactory.saveActor(dbActor);
-                return timer.wait(1000);
+                return timer.wait(constants.timeToNextRequest);
             })
             .then(() => {
                 if (urlsQueue.isEmpty()) {
@@ -31,6 +31,6 @@ module.exports = {
             });
     },
     showActors() {
-        return modelsFactory.showActors()
+        return modelsFactory.showActors();
     }
 };

@@ -5,7 +5,7 @@ const httpRequester = require("./http-requester");
 const htmlParser = require("./html-parser");
 const modelsFactory = require("../models");
 const timer = require("./timer");
-
+const constants = require("../config/constants");
 
 module.exports = {
     getMoviesInfoFromUrls(urlsQueue) {
@@ -17,7 +17,7 @@ module.exports = {
             .then(movieInfo => {
                 let dbMovieDetails = modelsFactory.getMovieInfo(movieInfo);
                 modelsFactory.saveMovieInfo(dbMovieDetails);
-                return timer.wait(1000);
+                return timer.wait(constants.timeToNextRequest);
             })
             .then(() => {
                 if (urlsQueue.isEmpty()) {

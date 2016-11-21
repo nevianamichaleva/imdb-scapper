@@ -7,13 +7,11 @@ const modelsFactory = require("../models");
 const timer = require("../utils/timer");
 const constants = require("../config/constants");
 
-
-
 module.exports = {
     getMoviesFromUrls(urlsQueue) {
         httpRequester.get(urlsQueue.pop())
             .then((result) => {
-                const selector = ".col-title span[title] a";
+                const selector = constants.selectorLinkOfMovieTitle;
                 const html = result.body;
                 return htmlParser.parseSimpleMovie(selector, html);
             })
@@ -22,7 +20,7 @@ module.exports = {
                     return modelsFactory.getSimpleMovie(movie.title, movie.url);
                 });
                 modelsFactory.insertManySimpleMovies(dbMovies);
-                return timer.wait(1000);
+                return timer.wait(constants.timeToNextRequest);
             })
             .then(() => {
                 if (urlsQueue.isEmpty()) {

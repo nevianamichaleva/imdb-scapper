@@ -14,6 +14,9 @@ module.exports = {
     showSimpleMovies() {
         return new Promise((resolve, reject) => {
             SimpleMovie.find((err, simpleMovies) => {
+                if (err) {
+                    reject(err);
+                }
                 resolve(simpleMovies);
             });
         });
@@ -27,7 +30,7 @@ module.exports = {
         });
     },
     saveActor(actor) {
-        actor.save((err, currActor) => {
+        actor.save((err) => {
             if (err) {
                 console.dir(err, { colors: true });
             }
@@ -36,6 +39,9 @@ module.exports = {
     showActors() {
         return new Promise((resolve, reject) => {
             Actor.find((err, actors) => {
+                if (err) {
+                    reject(err);
+                }
                 resolve(actors);
             });
         });
@@ -52,7 +58,7 @@ module.exports = {
         });
     },
     saveMovieInfo(movieinfo) {
-        movieinfo.save((err, currMovieinfo) => {
+        movieinfo.save((err) => {
             if (err) {
                 console.dir(err, { colors: true });
             }
@@ -61,6 +67,9 @@ module.exports = {
     showMovies() {
         return new Promise((resolve, reject) => {
             MovieInfo.find((err, movies) => {
+                if (err) {
+                    reject(err);
+                }
                 resolve(movies);
             });
         });
