@@ -16,7 +16,6 @@ module.exports = {
     generateSimpleMovies() {
         let urlsQueue = queuesFactory.getQueue();
         const simpleMovieUrlTemplate = _.template("http://www.imdb.com/search/title?genres=<%=genre%>&title_type=feature&0sort=moviemeter,asc&page=<%=i+1%>&view=simple&ref_=adv_nxt");
-
         constants.genres.forEach(genre => {
             for (let i = 0; i < constants.pagesCount; i += 1) {
                 let url = simpleMovieUrlTemplate({ genre, i });
