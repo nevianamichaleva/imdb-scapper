@@ -50,9 +50,15 @@ module.exports.parseActorInformation = (html) => {
 module.exports.parseMovieInformation = (html) => {
     $("body").html(html);
     let actors = [];
+    let actorIDs = [];
     $(constants.selectorAllActors).each((index, item) => {
         const actor = $(item).text();
+        // "/name/nm0000698/?ref_=tt_cl_t1"
+        const url = $(item).attr("href");
+        const hindex = url.indexOf("/?ref");
+        const id = url.substring("/name/".length, hindex);
         actors.push(actor);
+        actorIDs.push(id);
     });
     let genres = [];
     $(constants.selectorCategories).each((index, item) => {
@@ -67,7 +73,8 @@ module.exports.parseMovieInformation = (html) => {
         description: $(constants.selectorMovieDescription).text(),
         categories: genres,
         dateRelease: $(constants.selectorMovieReleaseDate).attr(constants.attributeContentName),
-        actors
+        actors,
+        actorIDs
     };
 
     return Promise.resolve()

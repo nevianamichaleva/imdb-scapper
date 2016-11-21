@@ -7,7 +7,7 @@ const mongoose = require("mongoose"),
 let actorSchema = new Schema({
     imageUrl: {
         type: String,
-        required: true
+        required: false
     },
     name: {
         type: String,

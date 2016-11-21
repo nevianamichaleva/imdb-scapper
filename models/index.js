@@ -54,7 +54,8 @@ module.exports = {
             description: movieinfo.description,
             categories: movieinfo.categories,
             dateRelease: movieinfo.dateRelease,
-            actors: movieinfo.actors
+            actors: movieinfo.actors,
+            actorIDs: movieinfo.actorIDs
         });
     },
     saveMovieInfo(movieinfo) {

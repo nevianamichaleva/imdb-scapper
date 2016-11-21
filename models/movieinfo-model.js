@@ -32,6 +32,10 @@ let movieinfoSchema = new Schema({
     actors: {
         type: [String],
         required: true
+    },
+    actorIDs: {
+        type: [String],
+        required: true
     }
 });
 
