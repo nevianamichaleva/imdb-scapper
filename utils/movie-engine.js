@@ -22,7 +22,6 @@ module.exports = {
                 urlsQueue.push(url);
             }
         });
-
         Array.from({ length: constants.asyncPagesCount })
             .forEach(() => simpleMovieScrapper.getMoviesFromUrls(urlsQueue));
     },
